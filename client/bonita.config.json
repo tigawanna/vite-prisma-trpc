@@ -1,0 +1,13 @@
+{
+  "root_dir": "./src",
+  "root_styles": "./src/index.css",
+  "framework": "React+Vite",
+  "state": "./src/state",
+  "components": "./src/components",
+  "vite_tanstack": {
+    "src_root_path": "./src/main.tsx",
+    "src_app_path": "./src/App.tsx",
+    "pages_dir_path": "./src/pages",
+    "routes_path": "./src/pages/routes/routes.ts"
+  }
+}
