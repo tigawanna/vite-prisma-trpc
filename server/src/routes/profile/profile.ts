@@ -1,11 +1,11 @@
 import { prisma } from '@/index';
 import { Router } from 'express';
 
-export const userRoutes = Router();
+export const profileRoutes = Router();
 
-userRoutes.get('/', async(req, res) => {
+profileRoutes.get('/', async(req, res) => {
     try {
-        const user  = await prisma.user.findMany();
+        const user  = await prisma.userProfile.findMany();
         res.json(user).status(200);
         
     } catch (error) {
@@ -14,9 +14,9 @@ userRoutes.get('/', async(req, res) => {
     }
 });
 
-userRoutes.post('/', async(req, res) => {
+profileRoutes.post('/', async(req, res) => {
     try {
-        const user = await prisma.user.create({
+        const user = await prisma.userProfile.create({
             data:req.body
         });
         res.json(user).status(200);  
@@ -26,9 +26,9 @@ userRoutes.post('/', async(req, res) => {
 
 })
 
-userRoutes.put('/:id', async(req, res) => {
+profileRoutes.put('/:id', async(req, res) => {
     try {
-        const user  = await prisma.user.update({
+        const user  = await prisma.userProfile.update({
             where: {
                 id: req.body.id
             },
@@ -41,9 +41,9 @@ userRoutes.put('/:id', async(req, res) => {
     }
 })
 
-userRoutes.get('/:id', async(req, res) => {
+profileRoutes.get('/:id', async(req, res) => {
     try {
-        const user  = await prisma.user.findUnique({
+        const user  = await prisma.userProfile.findUnique({
             where: {
                 id: req.params.id
             }

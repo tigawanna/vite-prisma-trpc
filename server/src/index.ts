@@ -2,7 +2,8 @@ import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import { PrismaClient } from '@prisma/client'
 import { indexRoute } from './routes';
-import { userRoutes } from './routes/user';
+import { profileRoutes } from './routes/profile/profile';
+
 
 dotenv.config();
 
@@ -17,7 +18,7 @@ export const prisma = new PrismaClient()
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use('/',indexRoute)
-app.use('/users',userRoutes)
+app.use('/profile',profileRoutes)
 
 app.listen(port, () => {
     console.log(`⚡️[server]: Server is running at http://localhost:${port}`);

@@ -10,19 +10,130 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id    String  @id
-  email String  @unique
-  name  String?
 
-  Post Post[]
+
+
+
+model Project {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name        String
+  description String
+  repoUrl     String
+
+  UserProfile   UserProfile? @relation(fields: [userProfileId], references: [id])
+  userProfileId String?
+
+  programmingLanguages ProgrammingLanguage[]
 }
 
-model Post {
-  id        String  @id @default(uuid())
-  title     String
-  content   String?
-  published Boolean @default(false)
-  author    User    @relation(fields: [authorId], references: [id])
-  authorId  String
+
+
+
+model ProgrammingLanguage {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name       String
+  color      String
+  frameworks Framework[]
+  Project    Project?    @relation(fields: [projectId], references: [id])
+  projectId  Int?
 }
+
+model Framework {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name                   String
+  description            String
+  githubUrl              String?
+  ProgrammingLanguages   ProgrammingLanguage? @relation(fields: [programmingLanguagesId], references: [id])
+  programmingLanguagesId Int?
+}
+
+
+
+
+model Education {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  institute String
+  level     String
+  years     Int
+
+  UserProfile   UserProfile? @relation(fields: [userProfileId], references: [id])
+  userProfileId String?
+}
+
+model Experience {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  title       String  @unique
+  description String
+  company     String?
+  location    String?
+  url         String?
+  years       Int
+
+  UserProfile   UserProfile? @relation(fields: [userProfileId], references: [id])
+  userProfileId String?
+}
+
+model JobAppliedTo {
+  id          Int      @id @default(autoincrement())
+  title       String   @unique
+  description String?
+  company     String?
+  location    String?
+  url         String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  UserProfile   UserProfile? @relation(fields: [userProfileId], references: [id])
+  userProfileId String?
+}
+
+model Skill {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name        String
+  description String
+  url         String
+
+  UserProfile   UserProfile? @relation(fields: [userProfileId], references: [id])
+  userProfileId String?
+}
+
+model UserProfile {
+  id        String   @id
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  email     String   @unique
+
+  name      String
+  about_me  String
+  image_url String
+
+  country String
+  city    String
+  phone   String
+
+  Project       Project[]
+  Education     Education[]
+  JobExperience Experience[]
+  JobAppliedTo  JobAppliedTo[]
+  Skill         Skill[]
+}
+
+
