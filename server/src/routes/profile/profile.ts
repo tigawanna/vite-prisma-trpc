@@ -8,13 +8,15 @@ profileRoutes.get('/', async(req, res) => {
         const user  = await prisma.userProfile.findMany();
         res.json(user).status(200);
         
-    } catch (error) {
-        res.json(error).status(400);
+    } catch (error:any) {
+        console.log("error getting profiles  == ",error)
+        res.json(error.message).status(400);
         
     }
 });
 
 profileRoutes.post('/', async(req, res) => {
+    console.log("req.body == ",req.body) 
     try {
         const user = await prisma.userProfile.create({
             data:req.body
